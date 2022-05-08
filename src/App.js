@@ -26,11 +26,33 @@ function App() {
         })
       )
 
-      spotify.getPlaylists().then((playlists) => 
-      dispatch
+      spotify.getUserPlaylists().then((playlists) =>
+        dispatch({
+          type: 'SET_PLAYLISTS',
+          playlists,
+        })
       )
+
+       spotify.getMyTopArtists().then((response) =>
+         dispatch({
+           type: 'SET_TOP_ARTISTS',
+           top_artists: response,
+         })
+       )
+
+       dispatch({
+         type: 'SET_SPOTIFY',
+         spotify: spotify,
+       })
+
+      spotify.getPlaylist('37i9dQZF1E4oH2NG2UyvvJ').then((response) => {
+        dispatch({
+          type: 'SET_DISCOVER_WEEKLY',
+          discover_weekly: response,
+        })
+      })
     }
-  }, [])
+  }, [token, dispatch])
 
   return (
     <div className='app'>
